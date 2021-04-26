@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">JustLogin</string>
+    <string name="email_hint">Enter your Email ID</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="login_button">Login</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="signup_button_text">SIGN UP</string>
+    <string name="your_email">Your email is: </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="e_mail">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="swipe_left_for_register">Swipe left to Register</string>
+    <string name="tag">Let\'s connect and build testable relationships with Android Activities and Fragments</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="re_type_password">Re-type Password</string>
+    <string name="swipe_right_for_login">Swipe right to Login</string>
+</resources>
