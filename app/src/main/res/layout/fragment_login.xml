@@ -65,19 +65,20 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textColor="@android:color/white"
-        android:text="@string/login"/>
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="?attr/colorAccent"
+        android:text="@string/login"
+        android:textSize="20sp"/>
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_arrow_right"
-        android:layout_above="@id/swipeRight"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_above="@id/tv_swipeLeft"
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:id="@+id/swipeRight"
+        android:id="@+id/tv_swipeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/swipe_left_for_register"
