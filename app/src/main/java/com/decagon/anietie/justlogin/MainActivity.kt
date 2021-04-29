@@ -21,5 +21,6 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = AuthenticationPagerAdapter(this)
         viewPager.adapter = pagerAdapter
 
+
     }
 }

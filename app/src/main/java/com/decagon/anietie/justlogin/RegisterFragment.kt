@@ -1,41 +1,40 @@
 package com.decagon.anietie.justlogin
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
+import com.decagon.anietie.justlogin.Validator.validateEmail
+import com.decagon.anietie.justlogin.Validator.validateGender
+import com.decagon.anietie.justlogin.Validator.verifyPhoneNum
+import java.util.regex.Pattern
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
+    lateinit var phone: EditText
+    lateinit var fullName: EditText
+    lateinit var email: EditText
+    lateinit var spinner: Spinner
+    lateinit var submit: Button
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_register, container, false)
-        val spinner = view.findViewById<Spinner>(R.id.spinner_gender)
+
+        phone = view.findViewById(R.id.et_phone_number)
+        fullName = view.findViewById<EditText>(R.id.et_full_name)
+        email = view.findViewById<EditText>(R.id.et_email)
+        spinner = view.findViewById<Spinner>(R.id.spinner_gender)
+        submit = view.findViewById<Button>(R.id.btn_register)
 
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -47,29 +46,48 @@ class RegisterFragment : Fragment() {
             // Apply the adapter to the spinner
             spinner.adapter = adapter
         }
-
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        submit.setOnClickListener{
+            val phoneNumber = phone.text.toString()
+            val name = fullName.text.toString()
+            val emailAddress = email.text.toString()
+            val gender = spinner.selectedItem.toString()
 
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                RegisterFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+            if(name.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty() || gender.isEmpty()) {
+                Toast.makeText(requireContext(), "Some Fields are Empty", Toast.LENGTH_SHORT).show()
+            }
+            else if (!verifyPhoneNum(phoneNumber)) {
+                Toast.makeText(requireContext(), "Invalid Phone Number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if(!validateGender(gender)) {
+                Toast.makeText(requireContext(), "Select a valid Gender", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else if(!validateEmail(emailAddress)) {
+                Toast.makeText(requireContext(), "Invalid Email address", Toast.LENGTH_SHORT).show()
+            }
+
+
+            else {
+
+                val intent = Intent(context, DisplayActivity::class.java)
+                intent.putExtra("name", "Full Name: $name")
+                intent.putExtra("email", "Email: $emailAddress")
+                intent.putExtra("phone", "Phone Number: $phoneNumber")
+                intent.putExtra("gender", "Gender: $gender")
+
+                startActivity(intent)
+            }
+
+
+        }
+
     }
+
+
 }
